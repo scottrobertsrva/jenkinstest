@@ -1,35 +1,29 @@
 pipeline {
    agent any
 
-    environment { 
-        EDGE_CREDS = credentials('Api-Mgmt-Edge-User')
+    environment {
         RUNTIME = sh(returnStdout: true, script: 'date +%Y-%m-%dT%H-%M-%S').trim()
         GIT_COMMIT_MESSAGE = 'Jenkins Git Commit :: $RUNTIME'
-        GIT_REPO = 'tfs.markelcorp.com/tfs/DefaultCollection/apimgmt/_git/edgeApiUtils'
-        ORG = 'markel-dev'
-        JAR = "edgeApiUtils-1.0.jar"
+        GIT_REPO = 'github.com/scottrobertsrva/jenkinstest'
     }
  
     stages{       
 
         stage('run backup'){
             steps {
-            withCredentials([usernamePassword(credentialsId: 'Api-Mgmt-Build-User', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+            withCredentials([usernamePassword(credentialsId: 'scott_github', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
                 sh "git checkout master"
                 sh "git pull https://${GIT_USERNAME}:${GIT_PASSWORD}@${GIT_REPO}"
             }
             sh "mkdir -p exports"
-            sh "echo $GIT_COMMIT_MESSAGE > exports/edgeExport.txt"
-            sh "java -jar $JAR task=exportDevelopers org=$ORG machineCredentials=$EDGE_CREDS > exports/exportDevelopers.json"
-            sh "java -jar $JAR task=exportCompanies org=$ORG machineCredentials=$EDGE_CREDS > exports/exportCompanies.json"
-            sh "java -jar $JAR task=exportApiProducts org=$ORG machineCredentials=$EDGE_CREDS > exports/exportApiProducts.json"
+            sh "echo $GIT_COMMIT_MESSAGE > test.txt"
          }
         }
         stage('store backup'){
             steps {
-                    sh 'git add  exports/*'
-                    sh 'git commit -m "edgeApiUtils Export: $RUNTIME"'
-                    withCredentials([usernamePassword(credentialsId: 'Api-Mgmt-Build-User', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+                    sh 'git add  tesdt.txt'
+                    sh 'git commit -m "commit: $RUNTIME"'
+                    withCredentials([usernamePassword(credentialsId: 'scott_github', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
                         sh 'git push https://${GIT_USERNAME}:${GIT_PASSWORD}@${GIT_REPO}'
                     }
                 }
