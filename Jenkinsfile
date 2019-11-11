@@ -17,7 +17,7 @@ pipeline {
             //}
             git url: "https://$GIT_REPO", credentialsId: 'scott_github', branch: 'master'
             sh "git pull origin master"
-            sh "echo $GIT_COMMIT_MESSAGE > test.txt"
+            sh "echo  git test $GIT_COMMIT_MESSAGE > test.txt"
          }
         }
         stage('store backup'){
