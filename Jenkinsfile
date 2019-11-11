@@ -20,7 +20,7 @@ pipeline {
         }
         stage('store backup'){
             steps {
-                    sh 'git add  tesdt.txt'
+                    sh 'git add  test.txt'
                     sh 'git commit -m "commit: $RUNTIME"'
                     withCredentials([usernamePassword(credentialsId: 'scott_github', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
                         sh 'git push https://${GIT_USERNAME}:${GIT_PASSWORD}@${GIT_REPO}'
