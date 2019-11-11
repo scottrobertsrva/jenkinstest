@@ -29,7 +29,7 @@ pipeline {
                     //withCredentials([usernamePassword(credentialsId: 'scott_github', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
                     //    sh "git push https://${GIT_USERNAME}:${GIT_PASSWORD}@${GIT_REPO}"
                     //}
-                    sh "git push"
+                    sh "git push --set-upstream origin master"
                 }
             }
         }
