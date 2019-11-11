@@ -15,7 +15,7 @@ pipeline {
             //    sh "git checkout master"
             //    sh "git pull https://${GIT_USERNAME}:${GIT_PASSWORD}@${GIT_REPO}"
             //}
-            git url: $GIT_REPO, credentialsId: 'scott_github', branch: 'master'
+            git url: '$GIT_REPO', credentialsId: 'scott_github', branch: 'master'
             git pull
             sh "echo $GIT_COMMIT_MESSAGE > test.txt"
          }
