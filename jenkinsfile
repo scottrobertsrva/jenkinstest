@@ -15,7 +15,6 @@ pipeline {
                 sh "git checkout master"
                 sh "git pull https://${GIT_USERNAME}:${GIT_PASSWORD}@${GIT_REPO}"
             }
-            sh "mkdir -p exports"
             sh "echo $GIT_COMMIT_MESSAGE > test.txt"
          }
         }
